@@ -1,13 +1,8 @@
-CREATE ROLE akaddr
-    LOGIN
-    SUPERUSER
-    CREATEDB
-    CREATEROLE
-    PASSWORD 'aswqas';
+CREATE USER akaddr
+WITH PASSWORD 'aswqas';
 
 CREATE DATABASE base10
-    WITH
-    OWNER = akaddr
+    WITH  OWNER = akaddr
     ENCODING = 'UTF8'
     LC_COLLATE = 'en_US.utf8'
     LC_CTYPE = 'en_US.utf8'

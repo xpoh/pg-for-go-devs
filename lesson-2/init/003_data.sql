@@ -1,3 +1,6 @@
+\c base10
+SET ROLE akaddr;
+
 INSERT INTO public.items(name, parent_id)  VALUES ('Самолет', 0) ON CONFLICT(id) DO NOTHING;
 INSERT INTO public.items(name, parent_id)  VALUES ('Вертолет', 0) ON CONFLICT(id) DO NOTHING;
 INSERT INTO public.items(name, parent_id)  VALUES ('Автомобиль', 0) ON CONFLICT(id) DO NOTHING;
@@ -20,4 +23,6 @@ INSERT INTO public.proc(id_test, id_param, value, raw_data, misc) VALUES (1, 2, 
 INSERT INTO public.proc(id_test, id_param, value, raw_data, misc) VALUES (2, 3, 222, NULL, 'все ок');
 INSERT INTO public.proc(id_test, id_param, value, raw_data, misc) VALUES (1, 3, 333, NULL, 'все ок');
 INSERT INTO public.proc(id_test, id_param, value, raw_data, misc) VALUES (2, 2, 444, NULL, 'все ок');
+
+select * from pg_class;
 
