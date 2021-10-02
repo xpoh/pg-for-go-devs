@@ -13,8 +13,6 @@
 \c base10
 SET ROLE akaddr;
 
-SET ROLE akaddr;
-
 DROP TABLE IF EXISTS public.items CASCADE;
 
 CREATE TABLE public.items
