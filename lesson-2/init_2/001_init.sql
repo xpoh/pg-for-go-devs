@@ -1,9 +1,15 @@
-CREATE USER gopher
-WITH PASSWORD 'P@ssw0rd';
+ALTER ROLE akaddr
+    LOGIN
+    SUPERUSER
+    CREATEDB
+    CREATEROLE
+    PASSWORD 'aswqas';
 
-CREATE DATABASE gopher_corp
-    WITH OWNER gopher
-    TEMPLATE = 'template0'
-    ENCODING = 'utf-8'
-    LC_COLLATE = 'C.UTF-8'
-    LC_CTYPE = 'C.UTF-8';
+CREATE DATABASE base10
+    WITH
+    OWNER = akaddr
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'en_US.utf8'
+    LC_CTYPE = 'en_US.utf8'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1;
