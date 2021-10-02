@@ -1,0 +1,41 @@
+rootConnection:
+  # IP address of Postgres (when running in docker: 127.0.0.1)
+  host: "127.0.0.1"
+  # Port on which Postgres listens for connections (default: 5432)
+  port: "5432"
+  # Postgres superuser login
+  user: "postgres"
+  # Postgres superuser password
+  password: "P@ssw0rd"
+  # Postgres superuser DB name
+  dbName: "postgres"
+task-1:
+  connectionString:
+    # IP address of Postgres (when running in docker: 127.0.0.1)
+    host: "127.0.0.1"
+    # Port on which Postgres listens for connections (default: 5432)
+    port: "5432"
+    # First task user name
+    user: "akaddr"
+    # First task user password
+    password: "aswqas"
+    # First task DB name
+    dbName: "base10"
+  # First task table schema  
+  schema: "base10"
+  # First task table name
+  table: "items"
+task-3:
+  connectionString:
+    # IP address of Postgres (when running in docker: 127.0.0.1)
+    host: "127.0.0.1"
+    # Port on which Postgres listens for connections (default: 5432)
+    port: "5432"
+    # Third task user name
+    user: "akaddr"
+    # Third task user password
+    password: "aswqas"
+    # First task DB name
+    dbName: "base10"
+  # Third task tables schema
+  schema: "items"

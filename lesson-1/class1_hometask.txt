@@ -1,0 +1,54 @@
+-- Table: public.items
+
+-- DROP TABLE public.items;
+
+CREATE TABLE IF NOT EXISTS public.items
+(
+    id bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),
+    name character varying COLLATE pg_catalog."default"
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.items
+    OWNER to akaddr;
+
+COMMENT ON TABLE public.items
+    IS 'Справочник изделий';
+
+    psql (13.4)
+Type "help" for help.
+
+base10-# \dt
+          List of relations
+ Schema |    Name    | Type  | Owner  
+--------+------------+-------+--------
+ public | items      | table | akaddr
+ public | params     | table | akaddr
+ public | proc       | table | akaddr
+ public | tests      | table | akaddr
+ public | workspaces | table | akaddr
+(5 rows)
+
+base10=# \c
+You are now connected to database "base10" as user "postgres".
+base10=# \l
+                                 List of databases
+   Name    |  Owner   | Encoding |  Collate   |   Ctype    |   Access privileges   
+-----------+----------+----------+------------+------------+-----------------------
+ base10    | akaddr   | UTF8     | en_US.utf8 | en_US.utf8 | 
+ postgres  | postgres | UTF8     | en_US.utf8 | en_US.utf8 | 
+ template0 | postgres | UTF8     | en_US.utf8 | en_US.utf8 | =c/postgres          +
+           |          |          |            |            | postgres=CTc/postgres
+ template1 | postgres | UTF8     | en_US.utf8 | en_US.utf8 | =c/postgres          +
+           |          |          |            |            | postgres=CTc/postgres
+(4 rows)
+
+(END)
+
+
+
+
+
+
+
