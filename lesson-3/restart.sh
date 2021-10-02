@@ -10,6 +10,6 @@ docker run \
     --name postgres \
     -e POSTGRES_PASSWORD=aswqas \
     -e PGDATA=/var/lib/postgresql/data \
-    -v $HOME/pg-for-go-devs/lesson-2/data:/var/lib/postgresql/data \
-    -v $HOME/pg-for-go-devs/lesson-2/init:/docker-entrypoint-initdb.d \
+    -v $HOME/pg-for-go-devs/lesson-3/data:/var/lib/postgresql/data \
+    -v $HOME/pg-for-go-devs/lesson-3/init:/docker-entrypoint-initdb.d \
     postgres:14

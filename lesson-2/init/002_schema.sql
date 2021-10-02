@@ -65,11 +65,11 @@ CREATE TABLE IF NOT EXISTS public.tests
     id_workspace bigint NOT NULL,
     date timestamp with time zone,
     name text COLLATE pg_catalog."default",
-    CONSTRAINT fk_item FOREIGN KEY (id)
+    CONSTRAINT fk_item FOREIGN KEY (id_item)
         REFERENCES public.items (id) MATCH SIMPLE
         ON UPDATE CASCADE
         ON DELETE CASCADE,
-    CONSTRAINT fk_workspace FOREIGN KEY (id)
+    CONSTRAINT fk_workspace FOREIGN KEY (id_workspace)
         REFERENCES public.workspaces (id) MATCH SIMPLE
         ON UPDATE CASCADE
         ON DELETE CASCADE
