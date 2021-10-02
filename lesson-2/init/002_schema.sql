@@ -10,6 +10,8 @@
 --    proc       - таблица с результатами проверки
 
 -- Table: public.items
+\c base10
+SET ROLE akaddr;
 
 DROP TABLE IF EXISTS public.items CASCADE;
 
