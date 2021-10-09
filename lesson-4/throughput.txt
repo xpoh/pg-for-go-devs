@@ -1,0 +1,42 @@
+-- Тестирование производительности запроса №3
+SELECT i.name, p.value FROM proc p
+                                LEFT JOIN tests t on p.id_test = t.id
+                                LEFT JOIN items i on t.id = i.id
+WHERE p.value = 999.9293521371371;
+
+MaxConns= 1  MinConns= 1
+duration: 11.303651792s
+threads: 1000
+queries: 8463
+QPS: 769
+
+MaxConns= 10  MinConns= 10
+duration: 10.347989211s
+threads: 1000
+queries: 31373
+QPS: 3137
+
+MaxConns= 15  MinConns= 15
+duration: 10.25407157s
+threads: 1000
+queries: 35327
+QPS: 3532
+
+Аппаратное обеспечение:
+
+  Название модели:	MacBook Pro
+  Идентификатор модели:	MacBookPro16,2
+  Имя процессора:	4‑ядерный процессор Intel Core i5
+  Скорость процессора:	2 ГГц
+  Количество процессоров:	1
+  Общее количество ядер:	4
+  Кэш 2-го уровня (в каждом ядре):	512 КБ
+  Кэш 3-го уровня:	6 МБ
+  Технология Hyper-Threading:	Включена
+  Память:	16 ГБ
+  Версия системной прошивки:	1554.140.20.0.0 (iBridge: 18.16.14759.0.1,0)
+  Серийный номер (система):	C02DC1QJML7H
+  UUID аппаратного обеспечения:	94830908-A30C-5A30-85A5-73CC3E39A17E
+  UDID обеспечения:	94830908-A30C-5A30-85A5-73CC3E39A17E
+  Состояние блокировки активации:	Включена
+

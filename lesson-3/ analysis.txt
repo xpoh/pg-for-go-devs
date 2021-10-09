@@ -1,0 +1,46 @@
+*Для запроса №3:
+
+Nested Loop Left Join  (cost=1000.42..18562.91 rows=1 width=41) (actual time=33.001..34.429 rows=1 loops=1)
+  ->  Gather  (cost=1000.00..18554.43 rows=1 width=16) (actual time=32.974..34.400 rows=1 loops=1)
+        Workers Planned: 2
+        Workers Launched: 2
+        ->  Parallel Seq Scan on proc p  (cost=0.00..17554.33 rows=1 width=16) (actual time=29.422..30.558 rows=0 loops=3)
+              Filter: (value = '999.9293521371371'::double precision)
+              Rows Removed by Filter: 333333
+  ->  Nested Loop Left Join  (cost=0.42..8.47 rows=1 width=41) (actual time=0.022..0.024 rows=1 loops=1)
+        ->  Index Only Scan using tests_pkey on tests t  (cost=0.28..8.29 rows=1 width=8) (actual time=0.014..0.015 rows=1 loops=1)
+              Index Cond: (id = p.id_test)
+              Heap Fetches: 1
+        ->  Index Scan using items_pkey on items i  (cost=0.14..0.18 rows=1 width=41) (actual time=0.004..0.004 rows=1 loops=1)
+              Index Cond: (id = t.id)
+Planning Time: 0.241 ms
+Execution Time: 34.455 ms
+
+Nested Loop Left Join  (cost=8.87..14.27 rows=1 width=41) (actual time=0.050..0.052 rows=1 loops=1)
+  ->  Merge Right Join  (cost=8.73..14.10 rows=1 width=16) (actual time=0.047..0.048 rows=1 loops=1)
+        Merge Cond: (t.id = p.id_test)
+        ->  Index Only Scan using tests_pkey on tests t  (cost=0.28..51.27 rows=1000 width=8) (actual time=0.010..0.013 rows=14 loops=1)
+              Heap Fetches: 14
+        ->  Sort  (cost=8.45..8.46 rows=1 width=16) (actual time=0.031..0.031 rows=1 loops=1)
+              Sort Key: p.id_test
+              Sort Method: quicksort  Memory: 25kB
+              ->  Index Scan using proc_value_index on proc p  (cost=0.42..8.44 rows=1 width=16) (actual time=0.027..0.027 rows=1 loops=1)
+                    Index Cond: (value = '999.9293521371371'::double precision)
+  ->  Index Scan using items_pkey on items i  (cost=0.14..0.18 rows=1 width=41) (actual time=0.002..0.002 rows=1 loops=1)
+        Index Cond: (id = t.id)
+Planning Time: 0.368 ms
+Execution Time: 0.127 ms
+
+base10=> \di+
+                                              List of relations
+ Schema |       Name       | Type  | Owner  |   Table    | Persistence | Access method | Size  | Description
+--------+------------------+-------+--------+------------+-------------+---------------+-------+-------------
+ public | items_name_index | index | akaddr | items      | permanent   | btree         | 16 kB |
+ public | items_pkey       | index | akaddr | items      | permanent   | btree         | 16 kB |
+ public | pk_id_uniq       | index | akaddr | params     | permanent   | btree         | 16 kB |
+ public | proc_misc_index  | index | akaddr | proc       | permanent   | btree         | 56 MB |
+ public | proc_pkey        | index | akaddr | proc       | permanent   | btree         | 21 MB |
+ public | proc_value_index | index | akaddr | proc       | permanent   | btree         | 21 MB |
+ public | tests_pkey       | index | akaddr | tests      | permanent   | btree         | 40 kB |
+ public | workspaces_pkey  | index | akaddr | workspaces | permanent   | btree         | 16 kB |
+(8 rows)
