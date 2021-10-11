@@ -1,0 +1,75 @@
+1. список таблиц:
+
+base10=> \d
+               List of relations
+ Schema |       Name        |   Type   | Owner
+--------+-------------------+----------+--------
+ public | items             | table    | akaddr
+ public | items_id_seq      | sequence | akaddr
+ public | params            | table    | akaddr
+ public | params_id_seq     | sequence | akaddr
+ public | proc              | table    | akaddr
+ public | proc_id_seq       | sequence | akaddr
+ public | tests             | table    | akaddr
+ public | tests_id_seq      | sequence | akaddr
+ public | workspaces        | table    | akaddr
+ public | workspaces_id_seq | sequence | akaddr
+(10 rows)
+
+2. количество строк в каждой таблице в соответствии со статистикой, которую собирает Postgres;
+    вывод для всех таблиц -1
+select reltuples::bigint as estimate from pg_class where oid = 'public.items'::regclass;
+ estimate
+----------
+       -1
+(1 row)
+
+3. объём диска, занимаемого каждой таблицей;
+base10=> \d+
+                                                          List of relations
+ Schema |       Name        |   Type   | Owner  | Persistence | Access method |    Size    |               Description
+
+--------+-------------------+----------+--------+-------------+---------------+------------+----------------------------
+--------------
+ public | items             | table    | akaddr | permanent   | heap          | 16 kB      | Справочник изделий
+ public | items_id_seq      | sequence | akaddr | permanent   |               | 8192 bytes |
+ public | params            | table    | akaddr | permanent   | heap          | 16 kB      | Справочник параметров
+ public | params_id_seq     | sequence | akaddr | permanent   |               | 8192 bytes |
+ public | proc              | table    | akaddr | permanent   | heap          | 16 kB      | Таблица с измерениями парам
+етров изделий
+ public | proc_id_seq       | sequence | akaddr | permanent   |               | 8192 bytes |
+ public | tests             | table    | akaddr | permanent   | heap          | 16 kB      | Испытание на рабочем месте
+ public | tests_id_seq      | sequence | akaddr | permanent   |               | 8192 bytes |
+ public | workspaces        | table    | akaddr | permanent   | heap          | 16 kB      | Справочник рабочих мест
+ public | workspaces_id_seq | sequence | akaddr | permanent   |               | 8192 bytes |
+(10 rows)
+
+4. общий объём диска, занимаемого экземпляром Postgres
+
+root@15212cddc380:/# du -sh $PGDATA/*
+34M     /var/lib/postgresql/data/base
+568K    /var/lib/postgresql/data/global
+4.0K    /var/lib/postgresql/data/pg_commit_ts
+4.0K    /var/lib/postgresql/data/pg_dynshmem
+8.0K    /var/lib/postgresql/data/pg_hba.conf
+4.0K    /var/lib/postgresql/data/pg_ident.conf
+16K     /var/lib/postgresql/data/pg_logical
+28K     /var/lib/postgresql/data/pg_multixact
+4.0K    /var/lib/postgresql/data/pg_notify
+4.0K    /var/lib/postgresql/data/pg_replslot
+4.0K    /var/lib/postgresql/data/pg_serial
+4.0K    /var/lib/postgresql/data/pg_snapshots
+4.0K    /var/lib/postgresql/data/pg_stat
+56K     /var/lib/postgresql/data/pg_stat_tmp
+12K     /var/lib/postgresql/data/pg_subtrans
+4.0K    /var/lib/postgresql/data/pg_tblspc
+4.0K    /var/lib/postgresql/data/pg_twophase
+4.0K    /var/lib/postgresql/data/PG_VERSION
+17M     /var/lib/postgresql/data/pg_wal
+12K     /var/lib/postgresql/data/pg_xact
+4.0K    /var/lib/postgresql/data/postgresql.auto.conf
+32K     /var/lib/postgresql/data/postgresql.conf
+4.0K    /var/lib/postgresql/data/postmaster.opts
+4.0K    /var/lib/postgresql/data/postmaster.pid
+
+

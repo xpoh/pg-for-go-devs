@@ -10,16 +10,19 @@
 --    proc       - таблица с результатами проверки
 
 -- Table: public.items
+\c base10
+SET ROLE akaddr;
 
-DROP TABLE IF EXISTS public.items;
+DROP TABLE IF EXISTS public.items CASCADE;
 
 CREATE TABLE public.items
 (
-    id bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),
-    name character varying COLLATE pg_catalog."default",
-    parent_id bigint,
-    CONSTRAINT fk_id_uniq UNIQUE (id)
+    id bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),
+    name TEXT,
+    parent_id bigint
 );
+
+
 
 COMMENT ON TABLE public.items
     IS 'Справочник изделий';
@@ -29,9 +32,8 @@ DROP TABLE IF EXISTS public.params;
 
 CREATE TABLE public.params
 (
-    id bigint NOT NULL,
-    name character varying(255) COLLATE pg_catalog."default" NOT NULL,
-    CONSTRAINT params_pkey PRIMARY KEY (id),
+    id bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY ,
+    name TEXT NOT NULL,
     CONSTRAINT pk_id_uniq UNIQUE (id)
 );
 
@@ -39,15 +41,14 @@ COMMENT ON TABLE public.params
     IS 'Справочник параметров';
 
 
-    -- Table: public.workspaces
+-- Table: public.workspaces
 
-DROP TABLE IF EXISTS public.workspaces;
+DROP TABLE IF EXISTS public.workspaces CASCADE;
 
 CREATE TABLE IF NOT EXISTS public.workspaces
 (
-    id bigint NOT NULL,
-    name character varying COLLATE pg_catalog."default" NOT NULL,
-    CONSTRAINT workspaces_pkey PRIMARY KEY (id)
+    id bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    name character varying COLLATE pg_catalog."default" NOT NULL
 );
 
 COMMENT ON TABLE public.workspaces
@@ -55,24 +56,23 @@ COMMENT ON TABLE public.workspaces
 
 
 -- Table: public.tests
-DROP TABLE IF EXISTS public.tests;
+DROP TABLE IF EXISTS public.tests CASCADE;
 
 CREATE TABLE IF NOT EXISTS public.tests
 (
-    id bigint NOT NULL,
+    id bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     id_item bigint NOT NULL,
     id_workspace bigint NOT NULL,
     date timestamp with time zone,
     name text COLLATE pg_catalog."default",
-    CONSTRAINT tests_pkey PRIMARY KEY (id),
     CONSTRAINT fk_item FOREIGN KEY (id)
         REFERENCES public.items (id) MATCH SIMPLE
         ON UPDATE CASCADE
         ON DELETE CASCADE,
     CONSTRAINT fk_workspace FOREIGN KEY (id)
         REFERENCES public.workspaces (id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
 );
 
 COMMENT ON TABLE public.tests
@@ -85,16 +85,17 @@ DROP TABLE IF EXISTS public.proc;
 
 CREATE TABLE IF NOT EXISTS public.proc
 (
-    id bigint NOT NULL,
+    id bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     id_test bigint,
-    value double precision,
+    id_param bigint,
+    value double precision CHECK ( abs(value) < 1000 ),
     raw_data "char"[],
     misc text COLLATE pg_catalog."default",
-    CONSTRAINT proc_pkey PRIMARY KEY (id),
-    CONSTRAINT fk_test FOREIGN KEY (id)
-        REFERENCES public.tests (id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+    CONSTRAINT fk_test FOREIGN KEY (id_test)
+        REFERENCES public.tests (id) MATCH SIMPLE ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT fk_param FOREIGN KEY (id_param)
+        REFERENCES public.tests (id) MATCH SIMPLE ON UPDATE CASCADE ON DELETE CASCADE
+
 );
 
 COMMENT ON TABLE public.proc
