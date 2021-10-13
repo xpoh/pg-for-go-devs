@@ -100,3 +100,10 @@ CREATE TABLE IF NOT EXISTS public.proc
 
 COMMENT ON TABLE public.proc
     IS 'Таблица с измерениями параметров изделий';
+
+-- Создаем индексы
+create index proc_value_index
+    on proc (value);
+
+create index proc_misc_index
+    on proc (misc);
