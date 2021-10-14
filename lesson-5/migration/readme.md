@@ -1,0 +1,1 @@
+migrate -database "postgresql://akaddr:aswqas@localhost:5432/base10?sslmode=disable" -path migration up  
